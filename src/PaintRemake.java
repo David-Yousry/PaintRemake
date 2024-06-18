@@ -26,17 +26,155 @@ public class PaintRemake extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        brushButton = new javax.swing.JButton();
+        lineButton = new javax.swing.JButton();
+        rectangleButton = new javax.swing.JButton();
+        ovalButton = new javax.swing.JButton();
+        eraserButton = new javax.swing.JButton();
+        undoButton = new javax.swing.JButton();
+        clearButton = new javax.swing.JButton();
+        solidCheckBox = new javax.swing.JCheckBox();
+        redButton = new javax.swing.JButton();
+        blackButton = new javax.swing.JButton();
+        greenButton = new javax.swing.JButton();
+        aquaButton = new javax.swing.JButton();
+        yellowButton = new javax.swing.JButton();
+        blueButton = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(224, 222, 222));
+
+        brushButton.setText("Brush");
+
+        lineButton.setText("Line");
+
+        rectangleButton.setText("Rectangle");
+
+        ovalButton.setText("Oval");
+
+        eraserButton.setBackground(new java.awt.Color(204, 204, 204));
+        eraserButton.setForeground(new java.awt.Color(0, 0, 0));
+        eraserButton.setText("Eraser");
+
+        undoButton.setBackground(new java.awt.Color(204, 204, 204));
+        undoButton.setForeground(new java.awt.Color(0, 0, 0));
+        undoButton.setText("Undo");
+
+        clearButton.setBackground(new java.awt.Color(204, 204, 204));
+        clearButton.setForeground(new java.awt.Color(0, 0, 0));
+        clearButton.setText("Clear");
+
+        solidCheckBox.setText("Solid");
+
+        redButton.setBackground(new java.awt.Color(255, 0, 0));
+
+        blackButton.setBackground(new java.awt.Color(0, 0, 0));
+
+        greenButton.setBackground(new java.awt.Color(0, 255, 0));
+
+        aquaButton.setBackground(new java.awt.Color(51, 255, 255));
+
+        yellowButton.setBackground(new java.awt.Color(255, 255, 0));
+
+        blueButton.setBackground(new java.awt.Color(0, 0, 255));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(aquaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(brushButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(lineButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(rectangleButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(ovalButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(eraserButton)
+                        .addGap(115, 115, 115)
+                        .addComponent(undoButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(clearButton)
+                        .addGap(120, 120, 120)
+                        .addComponent(solidCheckBox)
+                        .addGap(131, 131, 131)
+                        .addComponent(yellowButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(blueButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(redButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(greenButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(blackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(brushButton)
+                        .addComponent(lineButton)
+                        .addComponent(rectangleButton)
+                        .addComponent(ovalButton)
+                        .addComponent(eraserButton)
+                        .addComponent(undoButton)
+                        .addComponent(clearButton)
+                        .addComponent(solidCheckBox)
+                        .addComponent(redButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(blueButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(yellowButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(blackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(aquaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(greenButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel2.setBackground(new java.awt.Color(225, 225, 225));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 663, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -78,5 +216,21 @@ public class PaintRemake extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton aquaButton;
+    private javax.swing.JButton blackButton;
+    private javax.swing.JButton blueButton;
+    private javax.swing.JButton brushButton;
+    private javax.swing.JButton clearButton;
+    private javax.swing.JButton eraserButton;
+    private javax.swing.JButton greenButton;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton lineButton;
+    private javax.swing.JButton ovalButton;
+    private javax.swing.JButton rectangleButton;
+    private javax.swing.JButton redButton;
+    private javax.swing.JCheckBox solidCheckBox;
+    private javax.swing.JButton undoButton;
+    private javax.swing.JButton yellowButton;
     // End of variables declaration//GEN-END:variables
 }
