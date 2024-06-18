@@ -1,1 +1,1 @@
-"# PaintRemake" 
+# PaintRemake
