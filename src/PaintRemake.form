@@ -168,6 +168,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Eraser"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="eraserButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="undoButton">
           <Properties>
@@ -179,6 +182,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Undo"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="undoButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="clearButton">
           <Properties>
@@ -190,6 +196,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Clear"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clearButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JCheckBox" name="solidCheckBox">
           <Properties>
