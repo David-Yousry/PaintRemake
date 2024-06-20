@@ -1,14 +1,18 @@
 package PaintRemake.src.models;
 
+import java.awt.Color;
+
 public class Shape implements Drawing {
 
     private int x1,y1;
     private boolean isSolid;
+    private Color color;
 
-    public Shape(int x1,int y1, boolean isSolid) {
+    public Shape(int x1,int y1, boolean isSolid, Color color){
         this.x1 = x1;
         this.y1 = y1;
         this.isSolid = isSolid;
+        this.color = color;
     }
 
 
@@ -35,6 +39,16 @@ public class Shape implements Drawing {
     public void setSolid(boolean isSolid) {
         this.isSolid = isSolid;
     }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    
 
 
 }

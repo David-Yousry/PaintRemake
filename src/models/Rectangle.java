@@ -1,11 +1,15 @@
 package PaintRemake.src.models;
 
+import java.awt.Color;
+
 public class Rectangle extends Shape {
 
     private int width, height;
+    
 
-    public Rectangle(int x1, int y1, boolean isSolid, int width, int height) {
-        super(x1, y1, isSolid);
+
+    public Rectangle(int x1, int y1, boolean isSolid, int width, int height, Color color) {
+        super(x1, y1, isSolid, color);
         this.width = width;
         this.height = height;
     }
