@@ -2,12 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+
 package PaintRemake.src;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 
 import org.w3c.dom.events.MouseEvent;
 
@@ -19,10 +21,14 @@ import PaintRemake.src.models.*;
  */
 public class PaintRemake extends javax.swing.JFrame {
     
+    private static ArrayList<Drawing> drawings = new ArrayList<>();
     private Color color;
-    private char currentShape;
+    private char currentShape; // 'B' for brush, 'L' for line, 'R' for rectangle and 'O' for oval
     private int x1,x2,y1,y2;
     private int width, height;
+    private char paintMode; // 'D' for draw, 'E' for erase, 'U' for undo and 'C' for clear
+
+    
 
     
 
@@ -40,7 +46,14 @@ public class PaintRemake extends javax.swing.JFrame {
             @Override
             public void mouseDragged(java.awt.event.MouseEvent e) {
                 if(currentShape == 'B'){ // brush
-                //TODO: brush
+                    x1 = (int)getMousePosition().getX();
+                    y1 = (int)getMousePosition().getY();
+                    if(drawings.get(drawings.size()-1) instanceof Brush){
+                        Brush brush = (Brush)drawings.get(drawings.size()-1);
+                        brush.addPoint(x1, y1);
+                    }
+                    else
+                        drawings.add(new Brush(color));
                 }
                 else if (currentShape == 'L'){ //line
                     x2 = e.getX();
@@ -65,13 +78,16 @@ public class PaintRemake extends javax.swing.JFrame {
 
         @Override
         public void mouseClicked(java.awt.event.MouseEvent e) {
-            
         }
 
         @Override
         public void mousePressed(java.awt.event.MouseEvent e) {
             if(currentShape == 'B'){ // brush
-                 //TODO: brush
+                x1 = (int)getMousePosition().getX();
+                y1 = (int)getMousePosition().getY();
+                Brush brush = new Brush(color);
+                drawings.add(brush);
+            
             }
             else{ // rectangle, oval or line
                 x1 = e.getX();
@@ -86,14 +102,20 @@ public class PaintRemake extends javax.swing.JFrame {
                 //TODO: brush
             }
             else if (currentShape == 'L'){ //line
-                Line line = new Line(x1, y1, x2, y2);
+                Line line = new Line(x1, y1, x2, y2, color);
+                drawings.add(line);
             }
             else if(currentShape == 'R'){ //rectangle
-                Rectangle rectangle = new Rectangle(x1, y1, solidCheckBox.isSelected(), width, height);
+                Rectangle rectangle = new Rectangle(x1, y1, solidCheckBox.isSelected(), width, height, color);
+                drawings.add(rectangle);
+            
             }
             else if(currentShape == 'O'){ //oval
-                Oval oval = new Oval(x1, y1, solidCheckBox.isSelected(), width, height);
+                Oval oval = new Oval(x1, y1, solidCheckBox.isSelected(), width, height, color);
+                drawings.add(oval);
             }
+            
+            repaint();
         }
 
         @Override
@@ -169,14 +191,29 @@ public class PaintRemake extends javax.swing.JFrame {
         eraserButton.setBackground(new java.awt.Color(204, 204, 204));
         eraserButton.setForeground(new java.awt.Color(0, 0, 0));
         eraserButton.setText("Eraser");
+        eraserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eraserButtonActionPerformed(evt);
+            }
+        });
 
         undoButton.setBackground(new java.awt.Color(204, 204, 204));
         undoButton.setForeground(new java.awt.Color(0, 0, 0));
         undoButton.setText("Undo");
+        undoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                undoButtonActionPerformed(evt);
+            }
+        });
 
         clearButton.setBackground(new java.awt.Color(204, 204, 204));
         clearButton.setForeground(new java.awt.Color(0, 0, 0));
         clearButton.setText("Clear");
+        clearButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearButtonActionPerformed(evt);
+            }
+        });
 
         solidCheckBox.setText("Solid");
 
@@ -361,6 +398,27 @@ public class PaintRemake extends javax.swing.JFrame {
         this.currentShape = 'O';
     }//GEN-LAST:event_ovalButtonActionPerformed
 
+    private void eraserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eraserButtonActionPerformed
+        paintMode = 'E';
+        // TODO add your handling code here:
+    }//GEN-LAST:event_eraserButtonActionPerformed
+
+    private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
+        paintMode = 'C';
+        x1 = jPanel2.getX()+10; //FIXME: the coordinates are not correct
+        y1 = jPanel2.getY()+32;
+        width = jPanel2.getWidth();
+        height = jPanel2.getHeight();
+        
+        repaint();
+    
+    }//GEN-LAST:event_clearButtonActionPerformed
+
+    private void undoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoButtonActionPerformed
+        paintMode = 'U';
+        repaint();
+    }//GEN-LAST:event_undoButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -418,51 +476,100 @@ public class PaintRemake extends javax.swing.JFrame {
 
     @Override
     public void paint(Graphics g) {
+        super.paint(g);
+        
+        if(paintMode == 'U'){ // undo
+            if(drawings.size() > 0)
+                drawings.remove(drawings.size()-1);
+        }
+        else if(paintMode == 'C'){ // clear
+            g.setColor(jPanel2.getBackground());
+            g.fillRect(x1, y1, width, height);
+            drawings.clear();
+        }
+        // drawing the past shapes
+        for(int i = 0; i < drawings.size(); i++){
+            Drawing drawing = drawings.get(i);
+            g.setColor(drawing.getColor());
+            if(drawing instanceof Line){
+                Line line = (Line)drawing;
+                g.drawLine(line.getX1(), line.getY1(), line.getX2(), line.getY2());
+            }
+            else if(drawing instanceof Rectangle){
+                Rectangle rectangle = (Rectangle)drawing;
+                if(rectangle.isSolid()){
+                    g.fillRect(rectangle.getX1(), rectangle.getY1(), rectangle.getWidth(), rectangle.getHeight());
+                }else{
+                    g.drawRect(rectangle.getX1(), rectangle.getY1(), rectangle.getWidth(), rectangle.getHeight());
+                }
+            }
+            else if(drawing instanceof Oval){
+                Oval oval = (Oval)drawing;
+                if(oval.isSolid()){
+                    g.fillOval(oval.getX1(), oval.getY1(), oval.getWidth(), oval.getHeight());
+                }else{
+                    g.drawOval(oval.getX1(), oval.getY1(), oval.getWidth(), oval.getHeight());
+                }
+            }
+            else{ // brush
+                Brush brush = (Brush)drawing;
+                for(int k = 0; k < brush.getPoints().size(); k++){
+                    g.fillRect(brush.getPoints().get(k).x, brush.getPoints().get(k).y, 5, 5);
+                }
+            }
+        }
+        
 
-        super.paint(g); 
+
         g.setColor(color);
-        if(currentShape == 'B'){ // brush
-            //TODO: brush
-        
-        }
-        else if (currentShape == 'L'){ //line
-            g.drawLine(x1, y1, x2, y2);
-        }
-        else{ // rectangle or oval
-        
-            // in rectangle and oval we need to normalize the x and y in case the user drags the mouse to the left or up which will result in negative width or height
-            int normalizedX = x1;
-            int normalizedY = y1;
-            int normalizedWidth = width;
-            int normalizedHeight = height;
 
-            if (width < 0) {
-                normalizedX += width;
-                normalizedWidth = -width;
+        if(paintMode == 'D'){ // draw
+
+            if(currentShape == 'B'){ // brush
+                g.fillRect(x1,y1, 5, 5);
+            
             }
-            if (height < 0) {
-                normalizedY += height;
-                normalizedHeight = -height;
+            else if (currentShape == 'L'){ //line
+                g.drawLine(x1, y1, x2, y2);
             }
-        
-            if(currentShape == 'R'){ //rectangle
-                if(solidCheckBox.isSelected()){
-                    g.fillRect(normalizedX, normalizedY, normalizedWidth, normalizedHeight);
-                }else{
-                    g.drawRect(normalizedX, normalizedY, normalizedWidth, normalizedHeight);
+            else{ // rectangle or oval
+            
+                // in rectangle and oval we need to normalize the x and y in case the user drags the mouse to the left or up which will result in negative width or height
+                int normalizedX = x1;
+                int normalizedY = y1;
+                int normalizedWidth = width;
+                int normalizedHeight = height;
+
+                if (width < 0) {
+                    normalizedX += width;
+                    normalizedWidth = -width;
                 }
-            }
-            else if(currentShape == 'O'){ //oval
-                if(solidCheckBox.isSelected()){
-                    g.fillOval(normalizedX, normalizedY, normalizedWidth, normalizedHeight);
-                }else{
-                    g.drawOval(normalizedX, normalizedY, normalizedWidth, normalizedHeight);
+                if (height < 0) {
+                    normalizedY += height;
+                    normalizedHeight = -height;
+                }
+            
+                if(currentShape == 'R'){ //rectangle
+                    if(solidCheckBox.isSelected()){
+                        g.fillRect(normalizedX, normalizedY, normalizedWidth, normalizedHeight);
+                    }else{
+                        g.drawRect(normalizedX, normalizedY, normalizedWidth, normalizedHeight);
+                    }
+                }
+                else if(currentShape == 'O'){ //oval
+                    if(solidCheckBox.isSelected()){
+                        g.fillOval(normalizedX, normalizedY, normalizedWidth, normalizedHeight);
+                    }else{
+                        g.drawOval(normalizedX, normalizedY, normalizedWidth, normalizedHeight);
+                    }
                 }
             }
         }
-        
-        
-        
+        else if(paintMode == 'E'){ // erase
+            //TODO: erase
+        }
+    
+        paintMode = 'D';
     
     }
 
