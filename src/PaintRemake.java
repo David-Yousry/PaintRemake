@@ -29,6 +29,7 @@ public class PaintRemake extends javax.swing.JFrame {
     private int width, height;
     private char paintMode = 'D'; // 'D' for draw, 'E' for erase
     private boolean undo, clear;
+    private boolean isPressedInPanel2;
 
     /**
      * Creates new form PaintRemake
@@ -36,7 +37,7 @@ public class PaintRemake extends javax.swing.JFrame {
     public PaintRemake() {
         initComponents();
 
-        addMouseListener(new PressListener()); // FIXME: mouse make error outside border
+        addMouseListener(new PressListener()); 
         addMouseMotionListener(new DragListener());
         setTitle("Paint Remake");
 
@@ -48,6 +49,9 @@ public class PaintRemake extends javax.swing.JFrame {
 
         @Override
         public void mouseDragged(java.awt.event.MouseEvent e) {
+            if (!isPressedInPanel2) {
+                return;
+            }
             if (paintMode == 'E') { // erase
                 try{
                     x1 = (int) getMousePosition().getX();
@@ -64,8 +68,8 @@ public class PaintRemake extends javax.swing.JFrame {
             } else {
                 if (currentShape == 'B') { // brush
                         try{
-                            x1 = (int) getMousePosition().getX();
-                            y1 = (int) getMousePosition().getY();
+                            x1 = (int) e.getX();
+                            y1 = (int) e.getY();
                         }
                         catch(NullPointerException ex){
                         }
@@ -81,7 +85,7 @@ public class PaintRemake extends javax.swing.JFrame {
                         y2 = e.getY();
                 } else { // rectangle or oval
                     width = e.getX() - x1;
-                    // if(y2 > 106)
+                    if(y2 > 106)
                         height = e.getY() - y1;
                 }
             }
@@ -103,27 +107,38 @@ public class PaintRemake extends javax.swing.JFrame {
 
         @Override
         public void mousePressed(java.awt.event.MouseEvent e) {
-            if (paintMode == 'E') {
-                x1 = (int) getMousePosition().getX();
-                y1 = (int) getMousePosition().getY();
-                Eraser eraser = new Eraser(jPanel2.getBackground());
-                drawings.add(eraser);
-            } else {
-                if (currentShape == 'B') { // brush
+            if(e.getY() <= 106){
+                isPressedInPanel2 = false;
+                
+            }
+            else{
+                isPressedInPanel2 = true;
+                
+                if (paintMode == 'E') {
                     x1 = (int) getMousePosition().getX();
                     y1 = (int) getMousePosition().getY();
-                    Brush brush = new Brush(color);
-                    drawings.add(brush);
-                } else { // rectangle, oval or line
-                    x1 = e.getX();
-                    y1 = e.getY();
+                    Eraser eraser = new Eraser(jPanel2.getBackground());
+                    drawings.add(eraser);
+                } else {
+                    if (currentShape == 'B') { // brush
+                        x1 = (int) getMousePosition().getX();
+                        y1 = (int) getMousePosition().getY();
+                        Brush brush = new Brush(color);
+                        drawings.add(brush);
+                    } else { // rectangle, oval or line
+    
+                        x1 = e.getX();
+                        y1 = e.getY();
+                    }
                 }
             }
-
         }
 
         @Override
         public void mouseReleased(java.awt.event.MouseEvent e) {
+            if (!isPressedInPanel2) {
+                return;
+            }
             if (paintMode == 'E') {
                 return;
             }
@@ -539,6 +554,8 @@ public class PaintRemake extends javax.swing.JFrame {
     private javax.swing.JButton undoButton;
     private javax.swing.JButton yellowButton;
     // End of variables declaration//GEN-END:variables
+
+
 
     @Override
     public void paint(Graphics g) {
