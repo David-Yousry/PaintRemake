@@ -480,6 +480,8 @@ public class PaintRemake extends javax.swing.JFrame {
 
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_clearButtonActionPerformed
         clear = true;
+        currentShape = 'B';
+        activeButton(brushButton);
         repaint();
 
     }// GEN-LAST:event_clearButtonActionPerformed
