@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
-
 import PaintRemake.src.models.*;
 
 /**
@@ -25,7 +24,7 @@ public class PaintRemake extends javax.swing.JFrame {
     private static ArrayList<Drawing> drawings = new ArrayList<>();
     private Color color = Color.BLACK;
     private char currentShape = 'B'; // 'B' for brush, 'L' for line, 'R' for rectangle and 'O' for oval
-    private int x1, x2, y1, y2=107;
+    private int x1, x2, y1, y2 = 107;
     private int width, height;
     private char paintMode = 'D'; // 'D' for draw, 'E' for erase
     private boolean undo, clear;
@@ -37,7 +36,7 @@ public class PaintRemake extends javax.swing.JFrame {
     public PaintRemake() {
         initComponents();
 
-        addMouseListener(new PressListener()); 
+        addMouseListener(new PressListener());
         addMouseMotionListener(new DragListener());
         setTitle("Paint Remake");
 
@@ -53,11 +52,10 @@ public class PaintRemake extends javax.swing.JFrame {
                 return;
             }
             if (paintMode == 'E') { // erase
-                try{
+                try {
                     x1 = (int) getMousePosition().getX();
                     y1 = (int) getMousePosition().getY();
-                }
-                catch(NullPointerException ex){
+                } catch (NullPointerException ex) {
                 }
                 if (drawings.get(drawings.size() - 1) instanceof Eraser) {
                     Eraser eraser = (Eraser) drawings.get(drawings.size() - 1);
@@ -67,25 +65,24 @@ public class PaintRemake extends javax.swing.JFrame {
                     drawings.add(new Eraser(jPanel2.getBackground()));
             } else {
                 if (currentShape == 'B') { // brush
-                        try{
-                            x1 = (int) e.getX();
-                            y1 = (int) e.getY();
-                        }
-                        catch(NullPointerException ex){
-                        }
-                        if (drawings.get(drawings.size() - 1) instanceof Brush) {
-                            Brush brush = (Brush) drawings.get(drawings.size() - 1);
-                            if (y1 > 106)
-                                brush.addPoint(x1, y1);
-                        } else
-                            drawings.add(new Brush(color));
+                    try {
+                        x1 = (int) e.getX();
+                        y1 = (int) e.getY();
+                    } catch (NullPointerException ex) {
+                    }
+                    if (drawings.get(drawings.size() - 1) instanceof Brush) {
+                        Brush brush = (Brush) drawings.get(drawings.size() - 1);
+                        if (y1 > 106)
+                            brush.addPoint(x1, y1);
+                    } else
+                        drawings.add(new Brush(color));
                 } else if (currentShape == 'L') { // line
                     x2 = e.getX();
-                    if(y2 > 106)
+                    if (y2 > 106)
                         y2 = e.getY();
                 } else { // rectangle or oval
                     width = e.getX() - x1;
-                    if(y2 > 106)
+                    if (y2 > 106)
                         height = e.getY() - y1;
                 }
             }
@@ -107,13 +104,12 @@ public class PaintRemake extends javax.swing.JFrame {
 
         @Override
         public void mousePressed(java.awt.event.MouseEvent e) {
-            if(e.getY() <= 106){
+            if (e.getY() <= 106) {
                 isPressedInPanel2 = false;
-                
-            }
-            else{
+
+            } else {
                 isPressedInPanel2 = true;
-                
+
                 if (paintMode == 'E') {
                     x1 = (int) getMousePosition().getX();
                     y1 = (int) getMousePosition().getY();
@@ -126,7 +122,7 @@ public class PaintRemake extends javax.swing.JFrame {
                         Brush brush = new Brush(color);
                         drawings.add(brush);
                     } else { // rectangle, oval or line
-    
+
                         x1 = e.getX();
                         y1 = e.getY();
                     }
@@ -555,8 +551,6 @@ public class PaintRemake extends javax.swing.JFrame {
     private javax.swing.JButton yellowButton;
     // End of variables declaration//GEN-END:variables
 
-
-
     @Override
     public void paint(Graphics g) {
         super.paint(g);
@@ -579,7 +573,7 @@ public class PaintRemake extends javax.swing.JFrame {
             if (paintMode == 'D') { // draw
 
                 if (currentShape == 'B') { // brush
-                    g.fillRect(x1, y1, 5, 5);
+                    g.fillRect(x1, y1, 10, 10);
 
                 } else if (currentShape == 'L') { // line
                     g.drawLine(x1, y1, x2, y2);
@@ -651,7 +645,7 @@ public class PaintRemake extends javax.swing.JFrame {
             } else { // brush
                 Brush brush = (Brush) drawing;
                 for (int k = 0; k < brush.getPoints().size(); k++) {
-                    g.fillRect(brush.getPoints().get(k).x, brush.getPoints().get(k).y, 5, 5);
+                    g.fillRect(brush.getPoints().get(k).x, brush.getPoints().get(k).y, 10, 10);
                 }
             }
         }
