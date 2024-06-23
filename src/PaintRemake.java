@@ -82,6 +82,8 @@ public class PaintRemake extends javax.swing.JFrame {
                     if (e.getY() > 106)
                         y2 = e.getY();
                 } else { // rectangle or oval
+                    x2 = e.getX();
+                    y2 = e.getY();
                     width = e.getX() - x1;
                     if (e.getY() > 106)
                         height = e.getY() - y1;
@@ -149,14 +151,31 @@ public class PaintRemake extends javax.swing.JFrame {
             } else if (currentShape == 'L') { // line
                 Line line = new Line(x1, y1, x2, y2, color);
                 drawings.add(line);
-            } else if (currentShape == 'R') { // rectangle
-                Rectangle rectangle = new Rectangle(x1, y1, solidCheckBox.isSelected(), width, height, color);
-                drawings.add(rectangle);
+            } else{ // rectangle or oval
 
-            } else if (currentShape == 'O') { // oval
-                Oval oval = new Oval(x1, y1, solidCheckBox.isSelected(), width, height, color);
-                drawings.add(oval);
+                int normalizedX = x1;
+                int normalizedY = y1;
+                int normalizedWidth = width;
+                int normalizedHeight = height;
+                if (width < 0) {
+                    normalizedX += width;
+                    normalizedWidth = -width;
+                }
+                if (height < 0) {
+                    normalizedY += height;
+                    normalizedHeight = -height;
+                }
+
+
+                if (currentShape == 'R') { // rectangle
+                    Rectangle rectangle = new Rectangle(normalizedX, normalizedY, solidCheckBox.isSelected(), normalizedWidth, normalizedHeight, color);
+                    drawings.add(rectangle);
+                } else if (currentShape == 'O') { // oval
+                    Oval oval = new Oval(normalizedX, normalizedY, solidCheckBox.isSelected(), normalizedWidth, normalizedHeight, color);
+                    drawings.add(oval);
+                }
             }
+                
 
             if (e.getY() > 106)
                 repaint();
@@ -608,6 +627,7 @@ public class PaintRemake extends javax.swing.JFrame {
                             g.fillRect(normalizedX, normalizedY, normalizedWidth, normalizedHeight);
                         } else {
                             g.drawRect(normalizedX, normalizedY, normalizedWidth, normalizedHeight);
+                        
                         }
                     } else if (currentShape == 'O') { // oval
                         if (solidCheckBox.isSelected()) {
