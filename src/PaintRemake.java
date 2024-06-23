@@ -208,6 +208,7 @@ public class PaintRemake extends javax.swing.JFrame {
         button.setForeground(new Color(255, 255, 255));
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
