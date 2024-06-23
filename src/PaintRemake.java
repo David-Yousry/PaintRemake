@@ -29,6 +29,7 @@ public class PaintRemake extends javax.swing.JFrame {
     private char paintMode = 'D'; // 'D' for draw, 'E' for erase
     private boolean undo, clear;
     private boolean isPressedInPanel2;
+    private boolean isDragged;
 
     /**
      * Creates new form PaintRemake
@@ -78,16 +79,18 @@ public class PaintRemake extends javax.swing.JFrame {
                         drawings.add(new Brush(color));
                 } else if (currentShape == 'L') { // line
                     x2 = e.getX();
-                    if (y2 > 106)
+                    if (e.getY() > 106)
                         y2 = e.getY();
                 } else { // rectangle or oval
                     width = e.getX() - x1;
-                    if (y2 > 106)
+                    if (e.getY() > 106)
                         height = e.getY() - y1;
                 }
             }
             if (e.getY() > 106)
                 repaint();
+            isDragged = true;
+        
         }
 
         @Override
@@ -122,16 +125,19 @@ public class PaintRemake extends javax.swing.JFrame {
                         Brush brush = new Brush(color);
                         drawings.add(brush);
                     } else { // rectangle, oval or line
-
                         x1 = e.getX();
                         y1 = e.getY();
                     }
                 }
             }
+            isDragged = false;
+        
         }
 
         @Override
         public void mouseReleased(java.awt.event.MouseEvent e) {
+            if(!isDragged)
+                return;
             if (!isPressedInPanel2) {
                 return;
             }
@@ -649,7 +655,6 @@ public class PaintRemake extends javax.swing.JFrame {
                 }
             }
         }
-
     }
 
 }
