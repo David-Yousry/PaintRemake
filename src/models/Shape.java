@@ -3,6 +3,7 @@ package PaintRemake.src.models;
 import java.awt.Color;
 
 public class Shape implements Drawing {
+    
 
     private int x1,y1;
     private boolean isSolid;
